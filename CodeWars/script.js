@@ -27,4 +27,12 @@ function sumTwoSmallestNumbers(numbers) {
   let result = numbers[0] + numbers[1];
   return result
 }
+
+or
+
+function sumTwoSmallestNumbers(numbers) {  
+  let [a,b] = numbers.sort((a,b)=>a-b);
+  let result = a + b;
+  return result
+}
 */
