@@ -26,28 +26,54 @@ Output: 3
 */
 
 function TaskOne(strArr) {
-    const dataFiltering = strArr[0].split(/[),(]/).filter(Boolean).map(item => parseInt(item, 10));
-    const coordinateOfFirstRect = infoAboutRect(dataFiltering.slice(0,8));
-    const coordinateOfSecondRect = infoAboutRect(dataFiltering.slice(8));
+    const dataFiltering = strArr[0].split(/[),(]/).filter(Boolean);
+    const coordinateOfFirstRect = findEachCorner(dataFiltering.slice(0,8));
+    const coordinateOfSecondRect = findEachCorner(dataFiltering.slice(8));
 
-    const overlap = overlapArea(coordinateOfFirstRect,coordinateOfSecondRect);
+    function findEachCorner(coordinateOfRec) {
+        let leftBottomPoint = [coordinateOfRec[0],coordinateOfRec[1]],
+            leftTopPoint = [coordinateOfRec[2],coordinateOfRec[3]],
+            rightTopPoint = [coordinateOfRec[4],coordinateOfRec[5]],
+            rightBottomPoint = [coordinateOfRec[6],coordinateOfRec[7]];
 
-    if(!overlap) {
-        return 0;
+        const coordinates = [
+            leftBottomPoint,
+            leftTopPoint,
+            rightTopPoint,
+            rightBottomPoint
+        ];
+
+        for (const coordinateOfRecElement of coordinates) {
+            if ( coordinateOfRecElement[0] <= leftTopPoint[0] &&
+                 coordinateOfRecElement[1] >= leftTopPoint[1] ) {
+                leftTopPoint = coordinateOfRecElement;
+            }
+            if( coordinateOfRecElement[0] <= leftBottomPoint[0]  &&
+                coordinateOfRecElement[1] <= leftBottomPoint[1] ) {
+                leftBottomPoint = coordinateOfRecElement;
+            }
+
+            if (coordinateOfRecElement[0] >= rightTopPoint[0] &&
+                coordinateOfRecElement[1] >= rightTopPoint[1]) {
+                rightTopPoint = coordinateOfRecElement;
+            }
+
+            if (coordinateOfRecElement[0] >= rightBottomPoint[0] &&
+                coordinateOfRecElement[1] <= rightBottomPoint[1] ) {
+                rightBottomPoint = coordinateOfRecElement;
+            }
+        }
+        return {
+            leftTopPoint: leftTopPoint,
+            leftBottomPoint: leftBottomPoint,
+            rightTopPoint: rightTopPoint,
+            rightBottomPoint: rightBottomPoint,
+        }
     }
 
-    function infoAboutRect(coordinateOfRect) {
-        return {
-            x1: [coordinateOfRect[0],coordinateOfRect[1]],
-            x2: [coordinateOfRect[2],coordinateOfRect[3]],
-            y1: [coordinateOfRect[4],coordinateOfRect[5]],
-            y2: [coordinateOfRect[6],coordinateOfRect[7]],
-        }
-    };
-
-    function overlapArea (coordinateOfFirstRect,coordinateOfSecondRect) {
-        const {x1: leftBottomPointFirstRec, y2: rightTopPointFirstRec} = coordinateOfFirstRect;
-        const {y1: leftBottomPointSecondRec, x2: rightTopPointSecondRec} = coordinateOfSecondRect;
+    function overlapArea () {
+        const {leftBottomPoint: leftBottomPointFirstRec, rightTopPoint: rightTopPointFirstRec} = coordinateOfFirstRect;
+        const {leftBottomPoint: leftBottomPointSecondRec, rightTopPoint: rightTopPointSecondRec} = coordinateOfSecondRect;
 
         const { max, min } = Math;
         const left = max(leftBottomPointFirstRec[0], leftBottomPointSecondRec[0]);
@@ -64,16 +90,16 @@ function TaskOne(strArr) {
         return width * height;
     }
 
-    const sFirstRect = (coordinateOfFirstRect) => {
-        const { x1, y1} = coordinateOfFirstRect;
-        return (x1[0]-y1[0]) * (y1[1]-x1[1]);
+    function sFirstRect () {
+        const { leftBottomPoint, rightTopPoint } = coordinateOfFirstRect;
+        return (leftBottomPoint[0]-rightTopPoint[0]) * (rightTopPoint[1]-leftBottomPoint[1]);
     }
 
-    return sFirstRect(coordinateOfFirstRect) / overlap;
+    return Math.round(Math.abs(sFirstRect() / overlapArea()));
 }
 
-// console.log(TaskOne(["(0,0),(0,-2),(3,0),(3,-2),(2,-1),(3,-1),(2,3),(3,3)"]));
-// console.log(TaskOne(["(0,0),(5,0),(0,2),(5,2),(2,1),(5,1),(2,-1),(5,-1)"]));
+console.log(TaskOne(["(0,0),(0,-2),(3,0),(3,-2),(2,-1),(3,-1),(2,3),(3,3)"]));
+console.log(TaskOne(["(0,0),(5,0),(0,2),(5,2),(2,1),(5,1),(2,-1),(5,-1)"]));
 
 /*
 Task 2
@@ -119,7 +145,7 @@ function taskTwo(arr){
             for (const nextLibElement of lib) {
                 const resultWord = libElement + nextLibElement;
                 if(resultWord === word){
-                    return resultWord;
+                    return `${libElement},${nextLibElement}`;
                 }
             }
         }
@@ -127,8 +153,8 @@ function taskTwo(arr){
     return 'not possible';
 }
 
-console.log(taskTwo(["baseball", "a,all,b,ball,bas,base,cat,code,d,e,quit,z"]));
-console.log(taskTwo(["abcgefd", "a,ab,abc,abcg,b,c,dog,e,efd,zzzz"]));
+// console.log(taskTwo(["baseball", "a,all,b,ball,bas,base,cat,code,d,e,quit,z"]));
+// console.log(taskTwo(["abcgefd", "a,ab,abc,abcg,b,c,dog,e,efd,zzzz"]));
 
 /*
 Task 3
