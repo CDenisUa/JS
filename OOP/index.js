@@ -25,3 +25,4 @@ console.log(' user1', user1);
 console.log( 'user1.__proto__ ', user1.__proto__);
 console.log(' user1.__proto__ === User.prototype ',user1.__proto__ === User.prototype);
 console.log(' User is prototype of object user1? ',User.prototype.isPrototypeOf(user1));
+const a = 'test'
