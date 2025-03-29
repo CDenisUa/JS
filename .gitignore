@@ -1,0 +1,42 @@
+# === Node.js dependencies ===
+node_modules/            # Dependency folder
+dist/                    # Output folder for builds
+build/                   # Another common build folder
+
+# === Environment files ===
+.env                     # Main environment file
+.env.*                   # Any other .env variants (e.g., .env.local)
+
+# === Log files ===
+logs                     # Log directory
+*.log                    # Any log file
+*.log.*                  # Log files with extensions (e.g., .log.1)
+
+# === Debug logs from package managers ===
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === Testing-related ===
+coverage/                # Code coverage output
+.jest/                   # Jest cache
+.vitest/                 # Vitest cache (if used)
+
+# === IDE/editor settings ===
+.vscode/                 # VSCode settings
+.idea/                   # JetBrains IDEs (WebStorm, etc.)
+*.sublime-project        # Sublime Text project files
+*.sublime-workspace      # Sublime Text workspace files
+
+# === OS-specific files ===
+.DS_Store                # macOS metadata
+Thumbs.db                # Windows image cache
+
+# === TypeScript (if you add it later) ===
+*.tsbuildinfo            # TypeScript build cache
+
+# === Optional: lock files (uncomment if you don't want to commit them) ===
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
