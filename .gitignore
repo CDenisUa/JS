@@ -26,7 +26,9 @@ coverage/                # Code coverage output
 
 # === IDE/editor settings ===
 .vscode/                 # VSCode settings
+**/.vscode/
 .idea/                   # JetBrains IDEs (WebStorm, etc.)
+**/.idea/
 *.sublime-project        # Sublime Text project files
 *.sublime-workspace      # Sublime Text workspace files
 
