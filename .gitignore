@@ -1,5 +1,5 @@
 # === Node.js dependencies ===
-node_modules/            # Dependency folder
+**/node_modules/         # Dependency folder
 dist/                    # Output folder for builds
 build/                   # Another common build folder
 
